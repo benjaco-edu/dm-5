@@ -1,3 +1,4 @@
+
 class ISet{
     constructor(a, b){
         this.a = a;
@@ -110,6 +111,15 @@ class Empty extends ISet{
     }
 }
 
+
+class Predicate extends ISet{
+    member(val){
+        return this.a(val);
+    }
+    toString(){
+        return " "+this.a.toString()+" "
+    }
+}
 // test range
 {
     let a = new Range(5,10);
@@ -118,6 +128,14 @@ class Empty extends ISet{
     console.assert(a.member(5))
     console.assert(a.member(10))
     console.assert(!a.member(11))
+}
+
+// test predicate
+{
+    let a = new Predicate((a) => a%2==0);
+
+    console.assert(a.member(2))
+    console.assert(!a.member(3))
 }
 
 // test union
@@ -201,5 +219,13 @@ class Empty extends ISet{
     console.assert(!cUab.member(-4))
 
     console.log(cUab+"")
-}
 
+    let even = new Predicate((a) => a%2==0);
+    let ncEven = nc.intersect(even);
+
+    console.log(ncEven+"")
+    console.assert(ncEven.member(-30))
+    console.assert(!ncEven.member(-31))
+    console.assert(!ncEven.member(30))
+
+}
