@@ -14,7 +14,7 @@ class ISet{
 
 
     member(val){
-        throw new Error("Idiot")
+        throw new Error("The member functions has to be overriden")
     }
 
     union(set){
@@ -34,7 +34,7 @@ class ISet{
     }
 
     toString(){
-        return "-------------------IDIOT-------------------"
+        return "The toString functions has to be overriden"
     }
 }
 
@@ -120,6 +120,8 @@ class Predicate extends ISet{
         return " "+this.a.toString()+" "
     }
 }
+
+
 // test range
 {
     let a = new Range(5,10);
@@ -137,6 +139,23 @@ class Predicate extends ISet{
     console.assert(a.member(2))
     console.assert(!a.member(3))
 }
+
+
+// test universal
+{
+    let a = new Universal();
+
+    console.assert(a.member(3))
+}
+
+
+// test empty
+{
+    let a = new Empty();
+
+    console.assert(!a.member(3))
+}
+
 
 // test union
 {
@@ -161,6 +180,18 @@ class Predicate extends ISet{
     console.assert(u2.member(10))
     console.assert(!u2.member(100))
     console.assert(u2.member(130))
+
+    let empty = new Empty();
+    let cUempty = c.union(empty);
+    console.assert(cUempty.member(130));
+
+
+    let universal = new Universal();
+    let cUuniversal = c.union(universal);
+    console.assert(cUuniversal.member(10030));
+
+
+
 }
 
 // test Compliment
